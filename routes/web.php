@@ -28,5 +28,22 @@ Route::get('/post/{id}',function ($id){
 })->where('id','[0-9]+');
 
 Route::get('/search',function (\Illuminate\Http\Request $request){
-    dd($request);
+    return 'your name is: '.$request->name.' '.',and your age is: '.$request->age ;
+});
+
+//all listing
+Route::get('/',function (){
+    return view('listings',[
+        'heading'=>'Latest Listings',
+        'listings'=> \App\Models\Listing::all(),
+
+    ]);
+});
+
+//single listing
+
+Route::get('/listing/{id}',function ($id){
+    return view('listing',[
+        'listing'=> \App\Models\Listing::find($id)
+    ]);
 });
