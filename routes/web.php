@@ -32,18 +32,16 @@ Route::get('/search',function (\Illuminate\Http\Request $request){
 });
 
 //all listing
-Route::get('/',function (){
-    return view('listings',[
-        'heading'=>'Latest Listings',
-        'listings'=> \App\Models\Listing::all(),
+Route::get('/',[\App\Http\Controllers\ListingController::class, 'index']);
 
-    ]);
-});
+Route::get('/listings/create',
+    [\App\Http\Controllers\ListingController::class,'create']);
+
+Route::post('/listings',
+    [\App\Http\Controllers\ListingController::class,'store']);
 
 //single listing
 
-Route::get('/listing/{id}',function ($id){
-    return view('listing',[
-        'listing'=> \App\Models\Listing::find($id)
-    ]);
-});
+Route::get('/listing/{listing}',
+[\App\Http\Controllers\ListingController::class,'show']);
+
