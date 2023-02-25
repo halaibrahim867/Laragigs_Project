@@ -15,4 +15,4 @@
             </div>
         </div>
     </div>
-</x-card>
+</x-card >

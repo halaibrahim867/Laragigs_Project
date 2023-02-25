@@ -42,6 +42,38 @@ Route::post('/listings',
 
 //single listing
 
-Route::get('/listing/{listing}',
+Route::get('/listings/{listing}',
 [\App\Http\Controllers\ListingController::class,'show']);
 
+//show edit form
+Route::get('/listings/{listing}/edit',[
+    App\Http\Controllers\ListingController::class,'edit'
+]);
+
+Route::delete('/listings/{listing}',[
+    App\Http\Controllers\ListingController::class,'destroy'
+]);
+
+Route::put('/listings/{listing}',[
+    App\Http\Controllers\ListingController::class,'update'
+]);
+
+//show register / create form
+Route::get('/register',[
+    \App\Http\Controllers\UserController::class,'create'
+]);
+
+//create new user
+Route::post('/users',[
+    \App\Http\Controllers\UserController::class,'store'
+]);
+//log out
+
+Route::post('/logout',[
+    \App\Http\Controllers\UserController::class,'logout'
+]);
+
+//show login form
+Route::get('/login',[
+    \App\Http\Controllers\UserController::class,'login'
+]);
