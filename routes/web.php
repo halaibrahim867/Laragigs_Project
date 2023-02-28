@@ -35,33 +35,36 @@ Route::get('/search',function (\Illuminate\Http\Request $request){
 Route::get('/',[\App\Http\Controllers\ListingController::class, 'index']);
 
 Route::get('/listings/create',
-    [\App\Http\Controllers\ListingController::class,'create']);
+    [\App\Http\Controllers\ListingController::class,
+        'create'])->middleware('auth');
 
 Route::post('/listings',
-    [\App\Http\Controllers\ListingController::class,'store']);
+    [\App\Http\Controllers\ListingController::class,
+        'store'])->middleware('auth');
 
 //single listing
 
 Route::get('/listings/{listing}',
-[\App\Http\Controllers\ListingController::class,'show']);
+[\App\Http\Controllers\ListingController::class,
+    'show']);
 
 //show edit form
 Route::get('/listings/{listing}/edit',[
-    App\Http\Controllers\ListingController::class,'edit'
-]);
+    App\Http\Controllers\ListingController::class,
+    'edit'])->middleware('auth');
 
 Route::delete('/listings/{listing}',[
-    App\Http\Controllers\ListingController::class,'destroy'
-]);
+    App\Http\Controllers\ListingController::class,
+    'destroy'])->middleware('auth');
 
 Route::put('/listings/{listing}',[
-    App\Http\Controllers\ListingController::class,'update'
-]);
+    App\Http\Controllers\ListingController::class,
+    'update'])->middleware('auth');
 
 //show register / create form
 Route::get('/register',[
     \App\Http\Controllers\UserController::class,'create'
-]);
+])->middleware('guest');
 
 //create new user
 Route::post('/users',[
@@ -71,9 +74,20 @@ Route::post('/users',[
 
 Route::post('/logout',[
     \App\Http\Controllers\UserController::class,'logout'
-]);
+])->middleware('auth');
 
 //show login form
 Route::get('/login',[
     \App\Http\Controllers\UserController::class,'login'
+])->name('login')->middleware('guest');
+
+//log in user
+Route::post('/users/authenticate',[
+    \App\Http\Controllers\UserController::class,'authenticate'
 ]);
+
+
+//manage listings
+Route::get('/listings/manage',[
+    \App\Http\Controllers\ListingController::class,'manage'
+])->middleware('auth');
